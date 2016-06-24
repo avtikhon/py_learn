@@ -3,8 +3,8 @@ import sys
 
 words = {}
 sline = string.whitespace + string.punctuation + string.digits + "\"'"
-filename = 'a.py'
-print "ALX %s", sline
+filename = sys.argv[1]
+print "Checking symbols:\n=============\n%s\n=============\n" % sline
 
 for line in open(filename):
     for word in line.lower().split():
