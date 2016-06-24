@@ -16,9 +16,11 @@ print("\nServer creating the bound at: %s:%d" % (host, port))
 try:
     sock.bind((host, port))
 except:
-    os.system("fuser -kuv %s/tcp" % (port,))
+    os.system("fuser -kuv %s/tcp >/dev/null 2>&1" % (port,))
+    print("Server tring to recreate the bound - please wait 5 secs !!!")
     time.sleep(5)
     sock.bind((host, port))
+    print("Server successfully recreated the bound")
 
 # setup socket for maximum number of clients
 sock.listen(1)
@@ -29,11 +31,17 @@ while True:
     print("Server connected the client at (address:port): %s" % (addr,))
 
     # receive data from the client
-    data = conn.recv(1024)
-    if not data: break
+    rmsg = conn.recv(1024)
+    if not rmsg: break
+    print("Server received from the client the message: %s" % (rmsg,))
 
     # send reformated message
-    conn.send(data.upper())
+    if rmsg.isdigit():
+        smsg = str(int(rmsg) * 100)
+    else:
+        smsg = rmsg.upper()
+    print("Server sendig the client the new message: %s" % (rmsg,))
+    conn.send(smsg)
 
     # close the connection
     conn.close()
