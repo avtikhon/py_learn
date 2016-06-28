@@ -4,7 +4,9 @@ import sys
 import argparse
 
 optparser = argparse.ArgumentParser()
-optparser.add_argument('--log', '-l', dest='loglevel', default = 'INFO', help = 'verbosity log level from the list: DEBUG, INFO, WARNING, ERROR, CRITICAL')
+optparser.add_argument('--log', '-l', dest='loglevel', default = 'INFO', type = str,
+        choices = ('DEBUG', 'INFO', 'WARNING', 'ERROR', 'CRITICAL'),
+        help = 'any single verbosity log level from the list')
 args = optparser.parse_args()
 print("Arguments: %s" % args)
 
@@ -27,9 +29,9 @@ class TestUM(unittest.TestCase):
         logging.debug("")
         self.assertEqual('a' * 3, 'aaa')
 
+logging.basicConfig(format = u'%(filename)s[LINE:%(lineno)d][THREAD:%(thread)d]# %(levelname)-8s [%(asctime)s] [%(funcName)s]: %(message)s')
 logger = logging.getLogger()
 logger.setLevel(args.loglevel)
-logging.basicConfig(format = u'%(filename)s[LINE:%(lineno)d][THREAD:%(thread)d]# %(levelname)-8s [%(asctime)s] [%(funcName)s]: %(message)s')
 
 ### USE:
 #if __name__ == '__main__':
