@@ -3,12 +3,23 @@ import logging
 import sys
 import argparse
 
+# setup run options
 optparser = argparse.ArgumentParser()
-optparser.add_argument('--log', '-l', dest='loglevel', default = 'INFO', type = str,
+optparser.add_argument('--log', '-l',
+        dest = 'loglevel',
+        default = 'WARNING',
+        type = str,
         choices = ('DEBUG', 'INFO', 'WARNING', 'ERROR', 'CRITICAL'),
         help = 'any single verbosity log level from the list')
+
 args = optparser.parse_args()
-print("Arguments: %s" % args)
+
+# setup logging
+logging.basicConfig(format = u'%(filename)s[LINE:%(lineno)d][THREAD:%(thread)d]# %(levelname)-8s [%(asctime)s] [%(funcName)s]: %(message)s')
+logger = logging.getLogger()
+logger.setLevel(args.loglevel)
+
+logging.info("Arguments: %s" % args)
 
 class TestUM(unittest.TestCase):
     def setUp(self):
@@ -28,10 +39,6 @@ class TestUM(unittest.TestCase):
     def test_strings_a_3(self):
         logging.debug("")
         self.assertEqual('a' * 3, 'aaa')
-
-logging.basicConfig(format = u'%(filename)s[LINE:%(lineno)d][THREAD:%(thread)d]# %(levelname)-8s [%(asctime)s] [%(funcName)s]: %(message)s')
-logger = logging.getLogger()
-logger.setLevel(args.loglevel)
 
 ### USE:
 #if __name__ == '__main__':
