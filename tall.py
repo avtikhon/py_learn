@@ -2,6 +2,8 @@ import unittest
 import logging
 import sys
 import argparse
+import t1
+import t2
 
 # setup run options
 optparser = argparse.ArgumentParser()
@@ -21,31 +23,10 @@ logger.setLevel(args.loglevel)
 
 logging.info("Arguments: %s" % args)
 
-class TestUM(unittest.TestCase):
-    def setUp(self):
-        logging.debug("")
-        pass
-
-    def tearDown(self):
-        logging.debug("")
-        pass
-
-    # start testing with methods named by pattern test_*
-    
-    def test_1_1(self):
-        logging.debug("3 * 4 = 12")
-        self.assertEqual(3 * 4, 12)
-
-    def test_1_2(self):
-        logging.debug("'a' * 3 = 'aaa'")
-        self.assertEqual('a' * 3, 'aaa')
-
-    def test_1_3(self):
-        logging.debug("'a' * 3 = 'aaa'")
-        self.assertEqual('a' * 3, 'aaa')
-
 if __name__ == '__main__':
-    suite = unittest.TestLoader().loadTestsFromTestCase(TestUM)
-    runner = unittest.TextTestRunner(verbosity = 0)
+    suite = unittest.TestLoader().loadTestsFromModule(t1)
+    suite.addTests(unittest.TestLoader().loadTestsFromModule(t2))
+
+    runner = unittest.TextTestRunner(verbosity = 2)
     result = runner.run(suite)
 

@@ -32,15 +32,15 @@ class TestUM(unittest.TestCase):
 
     # start testing with methods named by pattern test_*
     
-    def test_1_1(self):
+    def test_2_1(self):
         logging.debug("3 * 4 = 12")
         self.assertEqual(3 * 4, 12)
 
-    def test_1_2(self):
+    def test_2_2(self):
         logging.debug("'a' * 3 = 'aaa'")
         self.assertEqual('a' * 3, 'aaa')
 
-    def test_1_3(self):
+    def test_2_3(self):
         logging.debug("'a' * 3 = 'aaa'")
         self.assertEqual('a' * 3, 'aaa')
 
